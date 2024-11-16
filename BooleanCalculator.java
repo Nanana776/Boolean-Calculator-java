@@ -3,11 +3,25 @@ public class BooleanCalculator {
     public void calculate(String val1, String val2, String operation) throws CustomException {
         
         Object parsedVal1 = parseValue(val1);
-        Object parsedVal2 = parseValue(val2);
+        Object parsedVal2 = null;
 
-        if (parsedVal1 == null || parsedVal2 == null) {
-           throw new CustomException("Can't do that");
+        if (operation.equalsIgnoreCase("not")) {
+            if (parsedVal1 == null) {
+                throw new CustomException("Missing value for 'not' operation");
+            }
+            not(parsedVal1);  
+            return; 
         }
+    
+        if (parsedVal1 == null || val2 == null) {
+            throw new CustomException("Missing one or both operands");
+        }
+    
+        parsedVal2 = parseValue(val2);
+        if (parsedVal2 == null) {
+            throw new CustomException("Missing operation");
+        }
+    
 
         switch (operation.toLowerCase()) {
             case "or":
@@ -18,12 +32,6 @@ public class BooleanCalculator {
                 break;
             case "xor":
                 xor(parsedVal1, parsedVal2);
-                break;
-            case "not1":
-                not1(parsedVal1);
-                break;
-            case "not2":
-                not2(parsedVal2);
                 break;
             case "nand":
                 nand(parsedVal1, parsedVal2);
@@ -59,25 +67,25 @@ public class BooleanCalculator {
 
     private void or(Object val1, Object val2) {
         if (val1 instanceof Boolean && val2 instanceof Boolean) {
-            System.out.println((Boolean) val1 | (Boolean) val2);
+            System.out.println((Boolean) val1 || (Boolean) val2);
         } else if (val1 instanceof Integer && val2 instanceof Integer) {
             System.out.println((Integer) val1 | (Integer) val2);
         } else if (val1 instanceof Character && val2 instanceof Character) {
             System.out.println((char) ((Character) val1 | (Character) val2));
         } else {
-            System.out.println("oops");
+            System.out.println("Option unavailable");
         }
     }
 
     private void and(Object val1, Object val2) {
         if (val1 instanceof Boolean && val2 instanceof Boolean) {
-            System.out.println((Boolean) val1 & (Boolean) val2);
+            System.out.println((Boolean) val1 && (Boolean) val2);
         } else if (val1 instanceof Integer && val2 instanceof Integer) {
             System.out.println((Integer) val1 & (Integer) val2);
         } else if (val1 instanceof Character && val2 instanceof Character) {
             System.out.println((char) ((Character) val1 & (Character) val2));
         } else {
-            System.out.println("can't");
+            System.out.println("Option unavailable");
         }
     }
 
@@ -89,11 +97,11 @@ public class BooleanCalculator {
         } else if (val1 instanceof Character && val2 instanceof Character) {
             System.out.println((char) ((Character) val1 ^ (Character) val2));
         } else {
-            System.out.println("do");
+            System.out.println("Option unavailable");
         }
     }
 
-    private void not1(Object val1) {
+    private void not(Object val1) {
         if (val1 instanceof Boolean) {
             System.out.println(!(Boolean) val1);
         } else if (val1 instanceof Integer) {
@@ -101,43 +109,31 @@ public class BooleanCalculator {
         } else if (val1 instanceof Character) {
             System.out.println((char) ~(Character) val1);
         } else {
-            System.out.println("this");
-        }
-    }
-
-    private void not2(Object val2) {
-        if (val2 instanceof Boolean) {
-            System.out.println(!(Boolean) val2);
-        } else if (val2 instanceof Integer) {
-            System.out.println(~(Integer) val2);
-        } else if (val2 instanceof Character) {
-            System.out.println((char) ~(Character) val2);
-        } else {
-            System.out.println("anymore");
+            System.out.println("Option unavailable");
         }
     }
 
     private void nand(Object val1, Object val2) {
         if (val1 instanceof Boolean && val2 instanceof Boolean) {
-            System.out.println(!(Boolean) val1 & (Boolean) val2);
+            System.out.println(!(Boolean) val1 && (Boolean) val2);
         } else if (val1 instanceof Integer && val2 instanceof Integer) {
             System.out.println(~((Integer) val1 & (Integer) val2));
         } else if (val1 instanceof Character && val2 instanceof Character) {
             System.out.println((char) ~(Character) val1 & (Character) val2);
         } else {
-            System.out.println("i");
+            System.out.println("Option unavailable");
         }
     }
 
     private void nor(Object val1, Object val2) {
         if (val1 instanceof Boolean && val2 instanceof Boolean) {
-            System.out.println(!(Boolean) val1 | (Boolean) val2);
+            System.out.println(!(Boolean) val1 || (Boolean) val2);
         } else if (val1 instanceof Integer && val2 instanceof Integer) {
             System.out.println(~((Integer) val1 | (Integer) val2));
         } else if (val1 instanceof Character && val2 instanceof Character) {
             System.out.println((char) ~(Character) val1 | (Character) val2);
         } else {
-            System.out.println("wanna");
+            System.out.println("Option unavailable");
         }
     }
 
@@ -149,7 +145,7 @@ public class BooleanCalculator {
         } else if (val1 instanceof Character && val2 instanceof Character) {
             System.out.println((char) ~(Character) val1 ^ (Character) val2);
         } else {
-            System.out.println("sleep");
+            System.out.println("Option unavailable");
         }
     }
 }
